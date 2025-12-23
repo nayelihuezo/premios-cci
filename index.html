@@ -92,35 +92,6 @@ button:disabled{
   color:#d4af37;
   font-size:14px;
 }
-
-  #finalizarBox button{
-  background:#d4af37;
-  border:none;
-  padding:16px 40px;
-  border-radius:30px;
-  font-size:20px;
-  font-weight:bold;
-  cursor:pointer;
-  margin-top:20px;
-}
-
-.finalizar-box{
-  display:none;
-  text-align:center;
-  margin-top:30px;   /* 🔑 espacio corto */
-}
-
-.finalizar-box button{
-  background:#d4af37;
-  border:none;
-  padding:16px 36px;
-  border-radius:30px;
-  font-size:20px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-
 </style>
 </head>
 
@@ -297,11 +268,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
 });
 </script>
   
-  <div id="finalizarBox" style="display:none; text-align:center; margin:60px 0;">
-  <h2 style="color:#d4af37;">
-  <button onclick="finalizarEncuesta()">Finalizar</button>
-</div>
-  
   <script>
 function revisarFinalizacion(){
   const votosLocal = JSON.parse(localStorage.getItem("votosCCI")) || {};
@@ -312,20 +278,12 @@ function revisarFinalizacion(){
   }
 }
 
-function finalizarEncuesta(){
-  document.body.innerHTML = `
-    <div style="text-align:center; padding:80px; font-family:Segoe UI;">
-      <h1 style="color:#d4af37;">🎉 ¡Gracias por votar!</h1>
-      <p>Tu participación ha sido registrada.</p>
-    </div>
-  `;
-}
-
 document.addEventListener("DOMContentLoaded", revisarFinalizacion);
 </script>
 
 </body>
 </html>
+
 
 
 
