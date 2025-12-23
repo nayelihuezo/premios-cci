@@ -30,9 +30,6 @@ button{
   font-weight:bold;
   cursor:pointer;
 }
-.resultado{
-  margin-top:40px;
-}
 .categoria{
   margin-bottom:40px;
 }
@@ -59,10 +56,10 @@ li{
 <div id="resultados" style="display:none"></div>
 
 <script>
-/* 🔐 CAMBIA ESTA CONTRASEÑA */
+/* 🔐 CONTRASEÑA */
 const PASSWORD = "cci2025";
 
-/* 🔥 TU FIREBASE CONFIG */
+/* 🔥 FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyDNjbPpBErQ1i_T-Whz0FOraA4g57URT6o",
   authDomain: "cci-awards.firebaseapp.com",
@@ -91,23 +88,22 @@ async function cargarResultados(){
   let conteo = {};
 
   snap.forEach(doc=>{
-    const v = doc.data();
-    if(!conteo[v.categoria]) conteo[v.categoria] = {};
-    conteo[v.categoria][v.nominado] =
-      (conteo[v.categoria][v.nominado] || 0) + 1;
+    const [categoria, nominado] = doc.id.split("||");
+    const total = doc.data().total || 0;
+
+    if(!conteo[categoria]) conteo[categoria] = [];
+    conteo[categoria].push({ nominado, total });
   });
 
   let html = "";
   for(const cat in conteo){
     html += `<div class="categoria"><h2>${cat}</h2><ol>`;
-    const top = Object.entries(conteo[cat])
-      .sort((a,b)=>b[1]-a[1])
-      .slice(0,3);
-
-    top.forEach(([nom,votos])=>{
-      html += `<li>${nom} – ${votos} votos</li>`;
-    });
-
+    conteo[cat]
+      .sort((a,b)=>b.total - a.total)
+      .slice(0,3)
+      .forEach(item=>{
+        html += `<li>${item.nominado} – ${item.total} votos</li>`;
+      });
     html += "</ol></div>";
   }
 
