@@ -2,74 +2,63 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Resultados – CCI Awards</title>
+<title>Resultados CCI Awards</title>
 <style>
-body{
-  font-family:Segoe UI, sans-serif;
-  background:#0b0b0f;
-  color:#fff;
-  padding:40px;
-}
-h1{ text-align:center; }
-.categoria{
-  margin-bottom:30px;
-  background:#111;
-  padding:20px;
-  border-radius:10px;
-}
-.bar{
-  background:#333;
-  border-radius:8px;
-  margin:6px 0;
-}
-.bar span{
-  display:block;
-  background:#00c3ff;
-  padding:6px;
-  border-radius:8px;
-}
+body{ background:#0b0b0f; color:#fff; font-family:Segoe UI,sans-serif; padding:40px; }
+h1,h2{ color:#d4af37; }
+.ganador{ color:#4caf50; font-weight:bold; }
 </style>
 </head>
 
 <body>
 
-<script>
-const PASSWORD = "SoloYo123"; // 🔐 CAMBIA ESTA CONTRASEÑA
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-let pass = prompt("Ingrese la contraseña de administrador:");
-
-if(pass !== PASSWORD){
-  document.body.innerHTML = "<h2>⛔ Acceso denegado</h2>";
-}else{
-  mostrarResultados();
+/* 🔐 CONTRASEÑA */
+if(prompt("Contraseña") !== "CCI2025"){
+  document.body.innerHTML = "";
+  throw new Error("No autorizado");
 }
 
-function mostrarResultados(){
-  let resultados = JSON.parse(localStorage.getItem("resultados")) || {};
+/* 👇 MISMO firebaseConfig */
+const firebaseConfig = {
+  apiKey: "AIzaSyDNjbPpBErQ1i_T-Whz0FOraA4g57URT6o",
+  authDomain: "cci-awards.firebaseapp.com",
+  projectId: "cci-awards",
+  storageBucket: "cci-awards.firebasestorage.app",
+  messagingSenderId: "261650236186",
+  appId: "1:261650236186:web:8810d9ad382f850520e2a3",
+  measurementId: "G-T6KECXWYD2"
+};
 
-  let html = "<h1>📊 Resultados de Votación</h1>";
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-  for(let categoria in resultados){
-    html += `<div class="categoria"><h2>${categoria}</h2>`;
+const snap = await getDocs(collection(db,"votos"));
+const data = {};
 
-    let total = Object.values(resultados[categoria]).reduce((a,b)=>a+b,0);
+snap.forEach(d=>{
+  const [cat, nom] = d.id.split("||");
+  data[cat] ??= {};
+  data[cat][nom] = d.data().total;
+});
 
-    for(let nominado in resultados[categoria]){
-      let votos = resultados[categoria][nominado];
-      let porcentaje = total ? Math.round((votos/total)*100) : 0;
+document.write("<h1>Resultados CCI Awards 2025</h1>");
 
-      html += `
-        <div>${nominado} — ${votos} votos</div>
-        <div class="bar">
-          <span style="width:${porcentaje}%">${porcentaje}%</span>
-        </div>
-      `;
-    }
+for(const cat in data){
+  const total = Object.values(data[cat]).reduce((a,b)=>a+b,0);
+  const ganador = Object.entries(data[cat]).sort((a,b)=>b[1]-a[1])[0];
 
-    html += "</div>";
+  document.write(`<h2>${cat}</h2><ul>`);
+  for(const n in data[cat]){
+    const v = data[cat][n];
+    const p = ((v/total)*100).toFixed(1);
+    const cls = n===ganador[0]?"ganador":"";
+    document.write(`<li class="${cls}">${n}: ${v} votos (${p}%)</li>`);
   }
-
-  document.body.innerHTML = html;
+  document.write(`<p class="ganador">🏆 Ganador: ${ganador[0]}</p></ul>`);
 }
 </script>
 
