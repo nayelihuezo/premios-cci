@@ -3,26 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <title>Resultados CCI Awards</title>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
 <style>
-body{ background:#0b0b0f; color:#fff; font-family:Segoe UI,sans-serif; padding:40px; }
-h1,h2{ color:#d4af37; }
-.ganador{ color:#4caf50; font-weight:bold; }
+body{
+  font-family:Segoe UI,sans-serif;
+  background:#0b0b0f;
+  color:#fff;
+  margin:0;
+  padding:40px;
+}
+h1{
+  color:#d4af37;
+  text-align:center;
+}
+input,button{
+  padding:10px;
+  font-size:16px;
+  border-radius:8px;
+  border:none;
+}
+button{
+  background:#d4af37;
+  font-weight:bold;
+  cursor:pointer;
+}
+.resultado{
+  margin-top:40px;
+}
+.categoria{
+  margin-bottom:40px;
+}
+.categoria h2{
+  color:#d4af37;
+  border-bottom:1px solid #d4af37;
+}
+li{
+  margin:6px 0;
+}
 </style>
 </head>
 
 <body>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+<h1>Resultados CCI Servers Awards 2025</h1>
 
-/* 🔐 CONTRASEÑA */
-if(prompt("Contraseña") !== "CCI2025"){
-  document.body.innerHTML = "";
-  throw new Error("No autorizado");
-}
+<div id="login">
+  <p>Ingrese contraseña para ver resultados:</p>
+  <input type="password" id="pass">
+  <button onclick="acceder()">Entrar</button>
+</div>
 
-/* 👇 MISMO firebaseConfig */
+<div id="resultados" style="display:none"></div>
+
+<script>
+/* 🔐 CAMBIA ESTA CONTRASEÑA */
+const PASSWORD = "cci2025";
+
+/* 🔥 TU FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyDNjbPpBErQ1i_T-Whz0FOraA4g57URT6o",
   authDomain: "cci-awards.firebaseapp.com",
@@ -33,32 +73,45 @@ const firebaseConfig = {
   measurementId: "G-T6KECXWYD2"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
-const snap = await getDocs(collection(db,"votos"));
-const data = {};
-
-snap.forEach(d=>{
-  const [cat, nom] = d.id.split("||");
-  data[cat] ??= {};
-  data[cat][nom] = d.data().total;
-});
-
-document.write("<h1>Resultados CCI Awards 2025</h1>");
-
-for(const cat in data){
-  const total = Object.values(data[cat]).reduce((a,b)=>a+b,0);
-  const ganador = Object.entries(data[cat]).sort((a,b)=>b[1]-a[1])[0];
-
-  document.write(`<h2>${cat}</h2><ul>`);
-  for(const n in data[cat]){
-    const v = data[cat][n];
-    const p = ((v/total)*100).toFixed(1);
-    const cls = n===ganador[0]?"ganador":"";
-    document.write(`<li class="${cls}">${n}: ${v} votos (${p}%)</li>`);
+function acceder(){
+  if(document.getElementById("pass").value !== PASSWORD){
+    alert("Contraseña incorrecta");
+    return;
   }
-  document.write(`<p class="ganador">🏆 Ganador: ${ganador[0]}</p></ul>`);
+  document.getElementById("login").style.display="none";
+  document.getElementById("resultados").style.display="block";
+  cargarResultados();
+}
+
+async function cargarResultados(){
+  const snap = await db.collection("votos").get();
+  let conteo = {};
+
+  snap.forEach(doc=>{
+    const v = doc.data();
+    if(!conteo[v.categoria]) conteo[v.categoria] = {};
+    conteo[v.categoria][v.nominado] =
+      (conteo[v.categoria][v.nominado] || 0) + 1;
+  });
+
+  let html = "";
+  for(const cat in conteo){
+    html += `<div class="categoria"><h2>${cat}</h2><ol>`;
+    const top = Object.entries(conteo[cat])
+      .sort((a,b)=>b[1]-a[1])
+      .slice(0,3);
+
+    top.forEach(([nom,votos])=>{
+      html += `<li>${nom} – ${votos} votos</li>`;
+    });
+
+    html += "</ol></div>";
+  }
+
+  document.getElementById("resultados").innerHTML = html;
 }
 </script>
 
