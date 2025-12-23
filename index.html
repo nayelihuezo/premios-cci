@@ -21,19 +21,54 @@ header h1{ color:#d4af37; letter-spacing:3px; }
 .container{ width:90%; max-width:1100px; margin:auto; padding:40px 0; }
 .category{ margin-bottom:60px; }
 .category h2{ color:#d4af37; border-bottom:1px solid #d4af37; padding-bottom:10px; }
-.cards{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-top:20px; }
-.card{ background:#151520; padding:20px; border-radius:15px; text-align:center; }
-button{ margin-top:15px; background:#d4af37; border:none; padding:8px 20px; border-radius:20px; font-weight:bold; cursor:pointer; }
-button:disabled{ background:#444; color:#aaa; }
-.mensaje{ margin-top:10px; color:#d4af37; font-size:14px; }
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
+  margin-top:20px;
+}
+.card{
+  background:#151520;
+  padding:20px;
+  border-radius:15px;
+  text-align:center;
+}
+button{
+  margin-top:15px;
+  background:#d4af37;
+  border:none;
+  padding:14px 32px;
+  border-radius:25px;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
+  width:100%;
+  max-width:220px;
+}
+button:disabled{
+  background:#444;
+  color:#aaa;
+}
+.mensaje{
+  margin-top:10px;
+  color:#d4af37;
+  font-size:14px;
+}
+
+/* 📱 Vista móvil */
+@media (max-width:600px){
+  .cards{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>CCI SERVERS AWARDS 2025</h1>
-<p>Vota una sola vez por cada categoría</p>
+  <h1>CCI SERVERS AWARDS 2025</h1>
+  <p>Vota una sola vez por cada categoría</p>
 </header>
 
 <div class="container">
@@ -56,67 +91,93 @@ function crearCategoria(nombre, nominados){
 </script>
 
 <script>
-/* TODAS TUS CATEGORÍAS */
 crearCategoria("Servidor más destacado de Escuela Bíblica",[
-"Cristina Barillas (Miércoles)","Eneyda Flores (Viernes)",
-"Jimena Barillas (Domingo 8am)","Yuli Díaz (Domingo 10:30am)"
+"Cristina Barillas (Miércoles)",
+"Eneyda Flores (Viernes)",
+"Jimena Barillas (Domingo 8am)",
+"Yuli Díaz (Domingo 10:30am)"
 ]);
 
 crearCategoria("Servidor más destacado de Alabanza",[
-"Ronal Mejia","Noe Hernandez","Jairo Lopez"
+"Ronal Mejia","Noe Hernandez",
+"Jairo Lopez", 
+"Habi Lainez"
 ]);
 
 crearCategoria("Servidor más destacado de Acomodación",[
-"Nicolás Reyes","Yésica Campos","Alicia Velázquez"
+"Nicolás Reyes",
+"Yésica Campos",
+"Alicia Velázquez"
 ]);
 
 crearCategoria("Servidor más destacado de Evangelismo",[
-"Hermano Francisco","Hermana Ferrer","Hermana Reyes"
+"Hermano Francisco",
+"Hermana Ferrer",
+"Hermana Reyes"
 ]);
 
 crearCategoria("Servidor más destacado de Multimedia",[
-"David Pérez","Nayeli Huezo","Estefany Panameño","Eneyda Flores"
+"David Pérez",
+"Nayeli Huezo",
+"Estefany Panameño",
+"Eneyda Flores"
 ]);
 
 crearCategoria("Servidor más destacado de Danza",[
-"Jhosseline Rivera","Jimena Ventura","Mayra Morales"
+"Jhosseline Rivera",
+"Jimena Ventura",
+"Mayra Morales"
 ]);
 
-crearCategoria("Servicio más destacado de Escuela Bíblica",[
-"Miércoles - Evelyn García","Viernes - Doris Ramírez",
-"Domingo 8am - Liliana Barillas","Domingo 10:30am - Elvis González"
+crearCategoria("Turno más destacado de Escuela Bíblica",[
+"Miércoles - Evelyn García",
+"Viernes - Doris Ramírez",
+"Domingo 8am - Liliana Barillas",
+"Domingo 10:30am - Elvis González"
 ]);
 
-crearCategoria("Servicio más destacado de Acomodación",[
-"Miércoles - Inez Díaz","Viernes - Yesenia Martínez",
-"Domingo 8am - Elsa Valencia","Domingo 10:30am - Silvia Gonzales"
+crearCategoria("Turno más destacado de Acomodación",[
+"Miércoles - Inez Díaz",
+"Viernes - Yesenia Martínez",
+"Domingo 8am - Elsa Valencia",
+"Domingo 10:30am - Silvia Gonzales"
 ]);
 
-crearCategoria("Servicio más destacado de Multimedia",[
-"Miércoles - David Pérez","Viernes - Yarist Lainez","Domingo 8am - Stefany Panameño"
+crearCategoria("Turno más destacado de Multimedia",[
+"Miércoles - David Pérez",
+"Viernes - Yarist Lainez",
+"Domingo 8am - Stefany Panameño"
 ]);
 
 crearCategoria("Novato del Año",[
-"Fernando Ventura - Mantenimiento","Nicolás Reyes - Mantenimiento",
-"Yeimi Ulloa - Alabanza","David Gil - Escuela Bíblica"
+"Fernando Ventura-Mantenimiento",
+"Nicolás Reyes-Mantenimiento",
+"Yeimi Ulloa-Alabanza",
+"David Gil-Escuela Bíblica"
 ]);
 
 crearCategoria("Mentor más destacado",[
-"Yuli Díaz","Marcos Cartagena","Elvis González","Cristina Barillas"
+"Yuli Díaz",
+"Marcos Cartagena",
+"Elvis González",
+"Cristina Barillas"
 ]);
 
 crearCategoria("Evento del Año",[
-"Inquebrantable","El mejor fin de semana de tu vida","Congreso ACE","Escuela de Verano"
+"Inquebrantable",
+"El mejor fin de semana de tu vida",
+"Congreso ACE",
+"Escuela de Verano"
 ]);
 </script>
 
 </div>
 
+<!-- 🔥 Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, doc, setDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-/* 👇 firebaseConfig */
 const firebaseConfig = {
   apiKey: "AIzaSyDNjbPpBErQ1i_T-Whz0FOraA4g57URT6o",
   authDomain: "cci-awards.firebaseapp.com",
@@ -131,6 +192,12 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 window.votar = async function(categoria, boton){
+  const votosLocal = JSON.parse(localStorage.getItem("votosCCI")) || {};
+  if(votosLocal[categoria]){
+    alert("⚠️ Ya votaste en esta categoría");
+    return;
+  }
+
   const nominado = boton.parentElement.querySelector("h3").innerText;
   const id = categoria + "||" + nominado;
 
@@ -140,11 +207,29 @@ window.votar = async function(categoria, boton){
     { merge: true }
   );
 
+  votosLocal[categoria] = true;
+  localStorage.setItem("votosCCI", JSON.stringify(votosLocal));
+
   const seccion = boton.closest(".category");
   seccion.querySelectorAll("button").forEach(b=>b.disabled=true);
   seccion.querySelector(".mensaje").innerText =
-    "✔️ Voto registrado. Gracias por participar";
-}
+    "✔️ Ya votaste en esta categoría. Gracias 🙌";
+};
+</script>
+
+<!-- 🔒 Bloquear votos al volver a entrar -->
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+  const votosLocal = JSON.parse(localStorage.getItem("votosCCI")) || {};
+  document.querySelectorAll(".category").forEach(cat=>{
+    const nombre = cat.getAttribute("data-cat");
+    if(votosLocal[nombre]){
+      cat.querySelectorAll("button").forEach(b=>b.disabled=true);
+      cat.querySelector(".mensaje").innerText =
+        "✔️ Ya votaste en esta categoría";
+    }
+  });
+});
 </script>
 
 </body>
