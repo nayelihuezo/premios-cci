@@ -180,7 +180,7 @@ crearCategoria("Turno más destacado de Acomodación",[
 crearCategoria("Turno más destacado de Multimedia",[
 "Miércoles - David Pérez",
 "Viernes - Yarist Lainez",
-"Domingo 8am - Estefani Panameño"
+"Domingo 8am - Estefany Panameño"
 ]);
 
 crearCategoria("Novato del Año",[
@@ -207,7 +207,7 @@ crearCategoria("Evento del Año",[
 
 </div>
 
-<!-- 🔥 Firebase -->
+<!--  Firebase -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, doc, setDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -252,7 +252,7 @@ window.votar = async function(categoria, boton){
 };
 </script>
 
-<!-- 🔒 Bloquear votos al volver a entrar -->
+<!--  Bloquear votos al volver a entrar -->
 <script>
 document.addEventListener("DOMContentLoaded", ()=>{
   const votosLocal = JSON.parse(localStorage.getItem("votosCCI")) || {};
@@ -283,6 +283,7 @@ document.addEventListener("DOMContentLoaded", revisarFinalizacion);
 
 </body>
 </html>
+
 
 
 
