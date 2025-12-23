@@ -1,0 +1,120 @@
+:root {
+    --negro: #0b0b0f;
+    --negro-claro: #151520;
+    --dorado: #d4af37;
+    --dorado-suave: #f1d87a;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #1a1a1f, var(--negro));
+    color: #fff;
+}
+
+header {
+    background: linear-gradient(180deg, #000, #121212);
+    padding: 50px 20px;
+    text-align: center;
+    border-bottom: 2px solid var(--dorado);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 36px;
+    letter-spacing: 4px;
+    color: var(--dorado);
+    text-transform: uppercase;
+}
+
+header p {
+    margin-top: 10px;
+    font-size: 15px;
+    color: #ddd;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+    padding: 50px 0;
+}
+
+.category {
+    margin-bottom: 70px;
+}
+
+.category h2 {
+    color: var(--dorado);
+    font-size: 22px;
+    border-bottom: 1px solid rgba(212,175,55,.4);
+    padding-bottom: 12px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px,1fr));
+    gap: 22px;
+    margin-top: 30px;
+}
+
+.card {
+    background: linear-gradient(145deg, #161622, #0f0f18);
+    border-radius: 18px;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,.7);
+    border: 1px solid rgba(212,175,55,.15);
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 17px;
+}
+
+button {
+    margin-top: 18px;
+    background: linear-gradient(135deg, var(--dorado), var(--dorado-suave));
+    color: #000;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:disabled {
+    background: #444;
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+.mensaje {
+    margin-top: 15px;
+    font-size: 14px;
+    color: var(--dorado);
+    font-weight: 600;
+    text-align: center;
+}
+
+/* ADMIN */
+#encabezado {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#logo {
+    width: 120px;
+    margin-bottom: 15px;
+}
+
+#exportar {
+    display: block;
+    margin: 30px auto;
+    background: linear-gradient(135deg, var(--dorado), var(--dorado-suave));
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}

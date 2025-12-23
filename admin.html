@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Resultados – CCI Awards</title>
+<style>
+body{
+  font-family:Segoe UI, sans-serif;
+  background:#0b0b0f;
+  color:#fff;
+  padding:40px;
+}
+h1{ text-align:center; }
+.categoria{
+  margin-bottom:30px;
+  background:#111;
+  padding:20px;
+  border-radius:10px;
+}
+.bar{
+  background:#333;
+  border-radius:8px;
+  margin:6px 0;
+}
+.bar span{
+  display:block;
+  background:#00c3ff;
+  padding:6px;
+  border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+const PASSWORD = "SoloYo123"; // 🔐 CAMBIA ESTA CONTRASEÑA
+
+let pass = prompt("Ingrese la contraseña de administrador:");
+
+if(pass !== PASSWORD){
+  document.body.innerHTML = "<h2>⛔ Acceso denegado</h2>";
+}else{
+  mostrarResultados();
+}
+
+function mostrarResultados(){
+  let resultados = JSON.parse(localStorage.getItem("resultados")) || {};
+
+  let html = "<h1>📊 Resultados de Votación</h1>";
+
+  for(let categoria in resultados){
+    html += `<div class="categoria"><h2>${categoria}</h2>`;
+
+    let total = Object.values(resultados[categoria]).reduce((a,b)=>a+b,0);
+
+    for(let nominado in resultados[categoria]){
+      let votos = resultados[categoria][nominado];
+      let porcentaje = total ? Math.round((votos/total)*100) : 0;
+
+      html += `
+        <div>${nominado} — ${votos} votos</div>
+        <div class="bar">
+          <span style="width:${porcentaje}%">${porcentaje}%</span>
+        </div>
+      `;
+    }
+
+    html += "</div>";
+  }
+
+  document.body.innerHTML = html;
+}
+</script>
+
+</body>
+</html>
